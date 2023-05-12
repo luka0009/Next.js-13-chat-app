@@ -7,12 +7,12 @@ export default function Home() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <Image 
             alt="logo"
-            height='80' 
-            width='80'
+            height='200' 
+            width='200'
             className="mx-auto w-auto"
             src='/images/logo.png' 
             />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight">
+            <h2 className="mt-[-25px] text-center text-3xl font-bold tracking-tight">
                 Sign in to your account
             </h2>
         </div>
