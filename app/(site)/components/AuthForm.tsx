@@ -4,8 +4,11 @@ import Input from "@/app/components/inputs/Input";
 import { useCallback, useState } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
-import { BsGithub, BsGoogle } from 'react-icons/bs';
+import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { table } from "console";
 
 type Props = {};
 
@@ -39,16 +42,32 @@ const AuthForm = (props: Props) => {
     setIsLoading(true);
 
     if (variant === "Register") {
-      axios.post('/api/register', data)
+      axios
+        .post("/api/register", data)
         .then(() => {
           console.log(data);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          toast.error(err.response.data);
+        })
         .finally(() => setIsLoading(false));
     }
 
     if (variant === "Login") {
-      // sign in
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials");
+          }
+
+          if (callback?.ok && !callback?.error) {
+            toast.success("Logged in");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -60,43 +79,43 @@ const AuthForm = (props: Props) => {
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-3">
       <div className="bg-slate-600 px-4 py-8 shadow sm:rounded-lg sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        {variant === 'Register' && (
+          {variant === "Register" && (
             <Input
               disabled={isLoading}
               register={register}
               errors={errors}
               required
-              id="name" 
+              id="name"
               label="Name"
             />
           )}
-          <Input 
+          <Input
             disabled={isLoading}
             register={register}
             errors={errors}
             required
-            id="email" 
-            label="Email address" 
+            id="email"
+            label="Email address"
             type="email"
           />
-          <Input 
+          <Input
             disabled={isLoading}
             register={register}
             errors={errors}
             required
-            id="password" 
-            label="Password" 
+            id="password"
+            label="Password"
             type="password"
           />
           <div>
             <Button disabled={isLoading} fullWidth type="submit">
-              {variant === 'Login' ? 'Sign in' : 'Register'}
+              {variant === "Login" ? "Sign in" : "Register"}
             </Button>
           </div>
         </form>
         <div className="mt-6">
           <div className="relative">
-            <div 
+            <div
               className="
                 absolute 
                 inset-0 
@@ -114,17 +133,17 @@ const AuthForm = (props: Props) => {
           </div>
 
           <div className="mt-6 flex gap-2">
-            <AuthSocialButton 
-              icon={BsGithub} 
-              onClick={() => console.log('askdlj')} 
+            <AuthSocialButton
+              icon={BsGithub}
+              onClick={() => console.log("askdlj")}
             />
-            <AuthSocialButton 
-              icon={BsGoogle} 
-              onClick={() => console.log('askdlj')} 
+            <AuthSocialButton
+              icon={BsGoogle}
+              onClick={() => console.log("askdlj")}
             />
           </div>
         </div>
-        <div 
+        <div
           className="
             flex 
             gap-2 
@@ -136,13 +155,12 @@ const AuthForm = (props: Props) => {
           "
         >
           <div>
-            {variant === 'Login' ? "Don't have an account yet?" : 'Already have an account?'} 
+            {variant === "Login"
+              ? "Don't have an account yet?"
+              : "Already have an account?"}
           </div>
-          <div 
-            onClick={toggleVariant} 
-            className="underline cursor-pointer"
-          >
-            {variant === 'Login' ? 'Create an account' : 'Login'}
+          <div onClick={toggleVariant} className="underline cursor-pointer">
+            {variant === "Login" ? "Create an account" : "Login"}
           </div>
         </div>
       </div>
