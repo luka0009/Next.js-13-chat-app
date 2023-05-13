@@ -9,6 +9,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { table } from "console";
+import Github from "next-auth/providers/github";
 
 type Props = {};
 
@@ -73,6 +74,17 @@ const AuthForm = (props: Props) => {
 
   const socialAction = (action: string) => {
     setIsLoading(true);
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid credentials");
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast.success("Logged in");
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -135,11 +147,11 @@ const AuthForm = (props: Props) => {
           <div className="mt-6 flex gap-2">
             <AuthSocialButton
               icon={BsGithub}
-              onClick={() => console.log("askdlj")}
+              onClick={() => socialAction('github')}
             />
             <AuthSocialButton
               icon={BsGoogle}
-              onClick={() => console.log("askdlj")}
+              onClick={() => socialAction('google')}
             />
           </div>
         </div>
