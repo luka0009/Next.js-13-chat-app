@@ -1,23 +1,32 @@
 "use client";
 import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/Input";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { signIn } from "next-auth/react";
-import { table } from "console";
-import Github from "next-auth/providers/github";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { sign } from "crypto";
 
 type Props = {};
 
 type variant = "Login" | "Register";
 
 const AuthForm = (props: Props) => {
+  const session = useSession();
+  const router = useRouter();
   const [variant, setVariant] = useState<variant>("Login");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if(session?.status === 'authenticated') {
+      console.log('Authendticated');
+      router.push('/users')
+    }
+  }, [session?.status, router])
 
   const toggleVariant = useCallback(() => {
     if (variant === "Login") {
@@ -46,7 +55,8 @@ const AuthForm = (props: Props) => {
       axios
         .post("/api/register", data)
         .then(() => {
-          console.log(data);
+          toast.success('Succesfully signed up');
+          signIn('credentials', data); 
         })
         .catch((err) => {
           toast.error(err.response.data);
@@ -66,6 +76,7 @@ const AuthForm = (props: Props) => {
 
           if (callback?.ok && !callback?.error) {
             toast.success("Logged in");
+            router.push('/users');
           }
         })
         .finally(() => setIsLoading(false));
