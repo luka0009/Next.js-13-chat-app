@@ -1,7 +1,7 @@
 const EmptyState = () => {
-    return ( 
-      <div 
-        className="
+  return (
+    <div
+      className="
           px-4 
           py-10 
           sm:px-6 
@@ -13,14 +13,17 @@ const EmptyState = () => {
           items-center 
           bg-slate-900
         "
-      >
-        <div className="text-center items-center flex flex-col">
-          <h3 className="mt-2 text-2xl font-semibold text-sky-300">
-            Select a chat or start a new conversation
-          </h3>
-        </div>
+    >
+      <div className="text-center items-center flex flex-col">
+        <h3
+          className="mt-2 text-2xl font-semibold 
+          text-sky-300"
+        >
+          Select a chat or start a new conversation
+        </h3>
       </div>
-    );
-  }
-   
-  export default EmptyState;
+    </div>
+  );
+};
+
+export default EmptyState;
