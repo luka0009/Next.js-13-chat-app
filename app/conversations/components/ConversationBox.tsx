@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -8,20 +8,20 @@ import { useSession } from "next-auth/react";
 import clsx from "clsx";
 
 import Avatar from "@/app/components/Avatar";
-// import useOtherUser from "@/app/hooks/useOtherUser";
-// import AvatarGroup from "@/app/components/AvatarGroup";
+import useOtherUser from "@/app/hooks/useOtherUser";
+import AvatarGroup from "@/app/components/AvatarGroup";
 import { FullConversationType } from "@/app/types";
 
 interface ConversationBoxProps {
-  data: FullConversationType,
+  data: FullConversationType;
   selected?: boolean;
 }
 
-const ConversationBox: React.FC<ConversationBoxProps> = ({ 
-  data, 
-  selected 
+const ConversationBox: React.FC<ConversationBoxProps> = ({
+  data,
+  selected,
 }) => {
-//   const otherUser = useOtherUser(data);
+  const otherUser = useOtherUser(data);
   const session = useSession();
   const router = useRouter();
 
@@ -35,9 +35,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     return messages[messages.length - 1];
   }, [data.messages]);
 
-  const userEmail = useMemo(() => session.data?.user?.email,
-  [session.data?.user?.email]);
-  
+  const userEmail = useMemo(
+    () => session.data?.user?.email,
+    [session.data?.user?.email]
+  );
+
   const hasSeen = useMemo(() => {
     if (!lastMessage) {
       return false;
@@ -49,26 +51,26 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
       return false;
     }
 
-    return seenArray
-      .filter((user) => user.email === userEmail).length !== 0;
+    return seenArray.filter((user) => user.email === userEmail).length !== 0;
   }, [userEmail, lastMessage]);
 
   const lastMessageText = useMemo(() => {
     if (lastMessage?.image) {
-      return 'Sent an image';
+      return "Sent an image";
     }
 
     if (lastMessage?.body) {
-      return lastMessage?.body
+      return lastMessage?.body;
     }
 
-    return 'Started a conversation';
+    return "Started a conversation";
   }, [lastMessage]);
 
-  return ( 
+  return (
     <div
       onClick={handleClick}
-      className={clsx(`
+      className={clsx(
+        `
         w-full 
         relative 
         flex 
@@ -81,46 +83,48 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         cursor-pointer
         my-3
         `,
-        selected ? 'bg-slate-400' : 'bg-slate-300'
+        selected ? "bg-slate-400" : "bg-slate-300"
       )}
     >
-      {/* {data.isGroup ? (
+      {data.isGroup ? (
         <AvatarGroup users={data.users} />
       ) : (
         <Avatar user={otherUser} />
-      )} */}
+      )}
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />
           <div className="flex justify-between items-center mb-1">
             <p className="text-md font-medium text-gray-900">
-              {'asldk'}
+              {data.name || otherUser.name}
             </p>
             {lastMessage?.createdAt && (
-              <p 
+              <p
                 className="
                   text-xs 
-                  text-gray-400 
-                  font-light
+                  text-blue-900 
+                  font-bold
                 "
               >
-                {(new Date(lastMessage.createdAt), 'p')}
+                {format(new Date(lastMessage.createdAt), "p")}
               </p>
             )}
           </div>
-          <p 
-            className={clsx(`
+          <p
+            className={clsx(
+              `
               truncate 
               text-sm
               `,
-              hasSeen ? 'text-gray-500' : 'text-black font-medium'
-            )}>
-              {lastMessageText}
-            </p>
+              hasSeen ? "text-gray-800" : "text-black font-medium"
+            )}
+          >
+            {lastMessageText}
+          </p>
         </div>
       </div>
     </div>
   );
-}
- 
+};
+
 export default ConversationBox;
