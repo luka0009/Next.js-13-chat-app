@@ -10,7 +10,7 @@ import MessageInput from "./MessageInput";
 type Props = {};
 
 const Form = (props: Props) => {
-  const conversationId = useConversation();
+    const { conversationId } = useConversation();
 
   const {
     register,
@@ -27,7 +27,7 @@ const Form = (props: Props) => {
     setValue('message', '', { shouldValidate: true });
     axios.post('/api/messages', {
         ...data,
-        conversationId
+        conversationId: conversationId
     })
   }
   return (
