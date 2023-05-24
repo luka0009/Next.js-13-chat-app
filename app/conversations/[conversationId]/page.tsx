@@ -1,9 +1,10 @@
 import getConversationById from "@/app/actions/getConversationById";
 import getMessages from "@/app/actions/getMessages";
 import EmptyState from "@/app/components/EmptyState";
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./components/Header";
 import Body from "./components/Body";
+import Form from "./components/Form";
 
 type Props = {
   conversationId: string;
@@ -12,8 +13,8 @@ type Props = {
 const conversationId = async ({ params }: { params: Props }) => {
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
-
-  if (!conversation) {
+  
+if (!conversation) {
     return (
       <div className="lg:pl-80 h-full">
         <div className="h-full flex flex-col">
@@ -28,6 +29,7 @@ const conversationId = async ({ params }: { params: Props }) => {
       <div className="h-full flex flex-col">
         <Header conversation={conversation} />
         <Body />
+        <Form />
       </div>
     </div>
   );
