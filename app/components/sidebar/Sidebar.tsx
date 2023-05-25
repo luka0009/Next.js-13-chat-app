@@ -9,7 +9,7 @@ type Props = {
 async function Sidebar({ children }: Props) {
   const currentUser = await getCurrentUser();
   return (
-    <div className="h-full bg-slate-800 text-sky-500">
+    <div className="h-full bg-gradient-to-b from-blue-900 via-black to-blue-900 text-white">
       <DesktopSidebar currentUser={currentUser!}/>
       <MobileFooter />
       <main className="lg:pl-20 h-full">

@@ -82,8 +82,9 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         transition
         cursor-pointer
         my-3
+        text-cyan-400
         `,
-        selected ? "bg-slate-400" : "bg-slate-300"
+        selected ? "bg-gradient-to-br from-gray-600 via-slate-700 to-stone-600" : "bg-gradient-to-br from-gray-400 via-slate-600 to-stone-400"
       )}
     >
       {data.isGroup ? (
@@ -95,15 +96,14 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />
           <div className="flex justify-between items-center mb-1">
-            <p className="text-md font-medium text-gray-900">
+            <p className="text-md font-medium text-white">
               {data.name || otherUser.name}
             </p>
             {lastMessage?.createdAt && (
               <p
                 className="
                   text-xs 
-                  text-blue-900 
-                  font-bold
+                  text-gray-100
                 "
               >
                 {format(new Date(lastMessage.createdAt), "p")}
@@ -116,7 +116,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
               truncate 
               text-sm
               `,
-              hasSeen ? "text-gray-800" : "text-black font-medium"
+              hasSeen ? "text-gray-200 font-light" : "text-white font-bold"
             )}
           >
             {lastMessageText}

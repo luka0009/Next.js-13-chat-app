@@ -35,11 +35,10 @@ const MobileItem: React.FC<MobileItemProps> = ({
         w-full 
         justify-center 
         p-4 
-        text-sky-500 
-        hover:text-sky-300 
-        hover:bg-slate-800
+        text-white
+        hover:text-neutral-100 
       `,
-        active && 'bg-slate-900 text-black',
+        active && 'bg-gradient-to-bl from-orange-900 via-cyan-900 to-orange-900 text-black',
       )}>
       <Icon className="h-6 w-6" />
     </Link>

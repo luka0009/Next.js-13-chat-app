@@ -25,7 +25,7 @@ const DesktopSidebar = ({ currentUser }: Props) => {
         lg:w-20 
         xl:px-6
         lg:overflow-y-auto 
-        lg:bg-slate-600
+        lg:bg-gradient-to-br from-slate-800 via-black to to-slate-800
         lg:pb-4
         lg:flex
         lg:flex-col

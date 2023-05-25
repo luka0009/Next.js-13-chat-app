@@ -39,9 +39,8 @@ const UserBox: React.FC<UserBoxProps> = ({ data }) => {
           flex 
           items-center 
           space-x-3 
-          bg-slate-800
+          bg-gradient-to-br from-slate-900 via-black to-slate-900
           p-3 
-          hover:bg-slate-900
           rounded-md
           transition
           cursor-pointer

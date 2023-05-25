@@ -10,6 +10,7 @@ type Props = {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   disabled?: boolean;
+  dark?: boolean,
 };
 
 const Input = ({
@@ -20,6 +21,7 @@ const Input = ({
   register,
   errors,
   disabled,
+  dark
 }: Props) => {
   return (
     <div>
@@ -63,7 +65,8 @@ const Input = ({
             sm:text-sm 
             sm:leading-6`,
             errors[id] && "focus:ring-rose-500",
-            disabled && "opacity-50 cursor-default"
+            disabled && "opacity-50 cursor-default",
+            dark && 'bg-gradient-to-br from-gray-900 via-black to-blue-900 via-30% text-cyan-400'
           )}
         />
       </div>

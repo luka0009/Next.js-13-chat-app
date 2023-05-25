@@ -8,6 +8,7 @@ interface ButtonProps {
   secondary?: boolean;
   danger?: boolean;
   disabled?: boolean;
+  dark?: boolean,
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   secondary,
   danger,
   disabled,
+  dark
 }) => {
   return ( 
     <button
@@ -40,8 +42,9 @@ const Button: React.FC<ButtonProps> = ({
         fullWidth && 'w-full',
         secondary ? 'text-gray-900' : 'text-white',
         danger && 'bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600',
-        !secondary && !danger && 'bg-sky-600 hover:bg-sky-700 focus-visible:outline-sky-600'
-      )}
+        !secondary && !danger && 'bg-sky-600 hover:bg-sky-700 focus-visible:outline-sky-600',
+        dark && 'bg-gradient-to-br from-sky-700 via-black to-sky-700 via-30% text-white' 
+        )}
     >
       {children}
     </button>

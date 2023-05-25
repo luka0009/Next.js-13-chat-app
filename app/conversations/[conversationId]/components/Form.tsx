@@ -33,18 +33,22 @@ const Form = (props: Props) => {
   };
 
   const handleUpload = (result: any) => {
-    axios.post('/api/messages', {
+    axios.post("/api/messages", {
       image: result?.info?.secure_url,
-      conversationId: conversationId
-    })
-  }
+      conversationId: conversationId,
+    });
+  };
 
   return (
-    <div className="px-4 py-4 bg-slate-600 text-sky-400 border-t flex items-center gap-2 lg:gap-4 w-full">
+    <div
+      className="px-4 py-4 
+    bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 via-30%      
+    text-sky-400 border-t flex items-center gap-2 lg:gap-4 w-full"
+    >
       <CldUploadButton
-      options={{ maxFiles: 1 }}
-      uploadPreset="pwegpapw"
-      onUpload={handleUpload}
+        options={{ maxFiles: 1 }}
+        uploadPreset="pwegpapw"
+        onUpload={handleUpload}
       >
         <HiPhoto size={30} className="text-sky-500" />
       </CldUploadButton>

@@ -10,14 +10,15 @@ const EmptyState = () => {
           h-full 
           flex 
           justify-center 
-          items-center 
-          bg-slate-900
+          items-center
+          bg-gradient-to-br from-blue-800 via-black to to-indigo-800 
+          
         "
     >
       <div className="text-center items-center flex flex-col">
         <h3
           className="mt-2 text-2xl font-semibold 
-          text-sky-300"
+          text-white"
         >
           Select a chat or start a new conversation
         </h3>

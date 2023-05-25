@@ -22,11 +22,11 @@ const AuthForm = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if(session?.status === 'authenticated') {
-      console.log('Authendticated');
-      router.push('/users')
+    if (session?.status === "authenticated") {
+      console.log("Authendticated");
+      router.push("/users");
     }
-  }, [session?.status, router])
+  }, [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
     if (variant === "Login") {
@@ -55,8 +55,8 @@ const AuthForm = (props: Props) => {
       axios
         .post("/api/register", data)
         .then(() => {
-          toast.success('Succesfully signed up');
-          signIn('credentials', data); 
+          toast.success("Succesfully signed up");
+          signIn("credentials", data);
         })
         .catch((err) => {
           toast.error(err.response.data);
@@ -76,7 +76,7 @@ const AuthForm = (props: Props) => {
 
           if (callback?.ok && !callback?.error) {
             toast.success("Logged in");
-            router.push('/users');
+            router.push("/users");
           }
         })
         .finally(() => setIsLoading(false));
@@ -100,7 +100,11 @@ const AuthForm = (props: Props) => {
 
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-3">
-      <div className="bg-slate-600 px-4 py-8 shadow sm:rounded-lg sm:px-10">
+      <div
+        className="
+      bg-gradient-to-br from-blue-800 via-black to-blue-800 
+      px-4 py-8 shadow sm:rounded-lg sm:px-10"
+      >
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === "Register" && (
             <Input
@@ -110,6 +114,7 @@ const AuthForm = (props: Props) => {
               required
               id="name"
               label="Name"
+              dark={true}
             />
           )}
           <Input
@@ -120,6 +125,7 @@ const AuthForm = (props: Props) => {
             id="email"
             label="Email address"
             type="email"
+            dark={true}
           />
           <Input
             disabled={isLoading}
@@ -129,9 +135,10 @@ const AuthForm = (props: Props) => {
             id="password"
             label="Password"
             type="password"
+            dark={true}
           />
           <div>
-            <Button disabled={isLoading} fullWidth type="submit">
+            <Button disabled={isLoading} dark={true} fullWidth type="submit">
               {variant === "Login" ? "Sign in" : "Register"}
             </Button>
           </div>
@@ -149,7 +156,9 @@ const AuthForm = (props: Props) => {
               <div className="w-full border-t border-sky-500" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-slate-800 px-2 py-1 rounded-full text-sky-500">
+              <span className="
+              bg-gradient-to-br from-blue-900 via-slate-900 to-blue-900 
+              px-2 py-1 rounded-full text-white">
                 Or continue with
               </span>
             </div>
@@ -158,11 +167,11 @@ const AuthForm = (props: Props) => {
           <div className="mt-6 flex gap-2">
             <AuthSocialButton
               icon={BsGithub}
-              onClick={() => socialAction('github')}
+              onClick={() => socialAction("github")}
             />
             <AuthSocialButton
               icon={BsGoogle}
-              onClick={() => socialAction('google')}
+              onClick={() => socialAction("google")}
             />
           </div>
         </div>

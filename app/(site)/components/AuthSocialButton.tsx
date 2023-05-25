@@ -18,7 +18,7 @@ const AuthSocialButton: React.FC<AuthSocialButtonProps> = ({
         w-full 
         justify-center 
         rounded-md 
-        bg-slate-800 
+        bg-gradient-to-br from-slate-800 via-black to-slate-800 
         px-4 
         py-2 
         text-sky-500 
