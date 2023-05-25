@@ -35,7 +35,7 @@ const ConversationList = ({ initialItems }: Props) => {
       `, isOpen ? 'hidden' : 'block w-full left-0')}>
         <div className="px-5">
           <div className="flex justify-between mb-4 pt-4">
-            <div className="text-2xl font-bold text-sky-500">
+            <div className="text-2xl font-bold text-white">
               Messages
             </div>
             <div 
