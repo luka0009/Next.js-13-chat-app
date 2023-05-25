@@ -35,7 +35,7 @@ const Header = ({ conversation }: Props) => {
     />
       <div
         className="
-        bg-gradient-to-br from-gray-700 via-black to-blue-900 via-30%        text-white 
+        bg-gradient-to-bl from-gray-700 via-black to-blue-900 via-30%        text-white 
         w-full 
         flex 
         border-b-[1px] 

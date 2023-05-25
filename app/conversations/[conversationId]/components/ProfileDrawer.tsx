@@ -4,8 +4,9 @@ import useOtherUser from "@/app/hooks/useOtherUser";
 import { Transition, Dialog } from "@headlessui/react";
 import { Conversation, User } from "@prisma/client";
 import { format } from "date-fns";
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import { IoClose, IoTrash } from "react-icons/io5";
+import ConfirmModal from "./ConfirmModal";
 
 type Props = {
   data: Conversation & { users: User[] };
@@ -15,6 +16,7 @@ type Props = {
 
 const ProfileDrawer: React.FC<Props> = ({ data, isOpen, onClose }) => {
   const otherUser = useOtherUser(data);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");
@@ -34,6 +36,10 @@ const ProfileDrawer: React.FC<Props> = ({ data, isOpen, onClose }) => {
 
   return (
     <>
+      <ConfirmModal
+        isOpen={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+      />
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
@@ -45,7 +51,7 @@ const ProfileDrawer: React.FC<Props> = ({ data, isOpen, onClose }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-pink-500 bg-opacity-40" />
+            <div className="fixed inset-0 bg-blue-700 bg-opacity-50" />
           </Transition.Child>
           <div className="fixed inset-0 overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
@@ -81,112 +87,112 @@ const ProfileDrawer: React.FC<Props> = ({ data, isOpen, onClose }) => {
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         <div className="flex flex-col items-center">
-                            <div className="mb-2">
-                                <Avatar user={otherUser}/>
+                          <div className="mb-2">
+                            <Avatar user={otherUser} />
+                          </div>
+                          <div className="text-white">{title}</div>
+                          <div className="text-sm text-gray-200">
+                            {statusText}
+                          </div>
+                          <div className="flex gap-10 my-8">
+                            <div
+                              onClick={() => setConfirmOpen(true)}
+                              className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75"
+                            >
+                              <div className="w-10 h-10 bg-gradient-to-bl from-sky-700 via-gray-600 to-cyan-700 text-white rounded-full flex items-center justify-center">
+                                <IoTrash size={20} />
+                              </div>
+                              <div className="text-sm font-light text-neutral-200">
+                                Delete
+                              </div>
                             </div>
-                            <div className="text-white">
-                                {title}
-                            </div>
-                            <div className="text-sm text-gray-200">
-                                {statusText}
-                            </div>
-                            <div className="flex gap-10 my-8">
-                                <div
-                                onClick={() => {}}
-                                className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75"
-                                >
-                                    <div className="w-10 h-10 bg-gradient-to-bl from-sky-700 via-gray-600 to-cyan-700 text-white rounded-full flex items-center justify-center">
-                                        <IoTrash size={20}/>
-                                    </div>
-                                    <div className="text-sm font-light text-neutral-200">
-                                        Delete
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-full pb-5 pt-5 sm:px-0 sm:pt-0">
-                                <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
-                                    {data.isGroup && (
-                                        <div>
-                                        <dt 
-                                          className="
+                          </div>
+                          <div className="w-full pb-5 pt-5 sm:px-0 sm:pt-0">
+                            <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
+                              {data.isGroup && (
+                                <div>
+                                  <dt
+                                    className="
                                             text-sm 
                                             font-medium 
                                             text-gray-200 
                                             sm:w-40 
                                             sm:flex-shrink-0
                                           "
-                                        >
-                                          Emails
-                                        </dt>
-                                        <dd 
-                                          className="
+                                  >
+                                    Emails
+                                  </dt>
+                                  <dd
+                                    className="
                                             mt-1 
                                             text-sm 
                                             text-white 
                                             sm:col-span-2
                                           "
-                                        >
-                                          {data.users.map((user) => user.email).join(', ')}
-                                        </dd>
-                                      </div>
-                                    )}
-                                    {!data.isGroup && (
-                            <div>
-                              <dt 
-                                className="
+                                  >
+                                    {data.users
+                                      .map((user) => user.email)
+                                      .join(", ")}
+                                  </dd>
+                                </div>
+                              )}
+                              {!data.isGroup && (
+                                <div>
+                                  <dt
+                                    className="
                                   text-sm 
                                   font-medium 
                                   text-gray-200
                                   sm:w-40 
                                   sm:flex-shrink-0
                                 "
-                              >
-                                Email
-                              </dt>
-                              <dd 
-                                className="
+                                  >
+                                    Email
+                                  </dt>
+                                  <dd
+                                    className="
                                   mt-1 
                                   text-sm 
                                   text-white 
                                   sm:col-span-2
                                 "
-                              >
-                                {otherUser.email}
-                              </dd>
-                            </div>
-                          )}
-                          {!data.isGroup && (
-                            <>
-                              <hr />
-                              <div>
-                                <dt 
-                                  className="
+                                  >
+                                    {otherUser.email}
+                                  </dd>
+                                </div>
+                              )}
+                              {!data.isGroup && (
+                                <>
+                                  <hr />
+                                  <div>
+                                    <dt
+                                      className="
                                     text-sm 
                                     font-medium 
                                     text-gray-200 
                                     sm:w-40 
                                     sm:flex-shrink-0
                                   "
-                                >
-                                  Joined
-                                </dt>
-                                <dd 
-                                  className="
+                                    >
+                                      Joined
+                                    </dt>
+                                    <dd
+                                      className="
                                     mt-1 
                                     text-sm 
                                     text-white 
                                     sm:col-span-2
                                   "
-                                >
-                                  <time dateTime={joinedDate}>
-                                    {joinedDate}
-                                  </time>
-                                </dd>
-                              </div>
-                            </>
-                          )}
-                                </dl>
-                            </div>
+                                    >
+                                      <time dateTime={joinedDate}>
+                                        {joinedDate}
+                                      </time>
+                                    </dd>
+                                  </div>
+                                </>
+                              )}
+                            </dl>
+                          </div>
                         </div>
                       </div>
                     </div>

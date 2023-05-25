@@ -42,7 +42,7 @@ const Form = (props: Props) => {
   return (
     <div
       className="px-4 py-4 
-    bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 via-30%      
+    bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 via-30%      
     text-sky-400 border-t flex items-center gap-2 lg:gap-4 w-full"
     >
       <CldUploadButton

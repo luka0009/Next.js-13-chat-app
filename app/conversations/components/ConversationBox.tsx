@@ -84,7 +84,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         my-3
         text-cyan-400
         `,
-        selected ? "bg-gradient-to-br from-gray-600 via-slate-700 to-stone-600" : "bg-gradient-to-br from-gray-400 via-slate-600 to-stone-400"
+        selected ? "bg-gradient-to-br from-gray-800 via-slate-900 to-stone-800" : "bg-gradient-to-br from-gray-400 via-slate-600 to-stone-400"
       )}
     >
       {data.isGroup ? (
