@@ -78,13 +78,13 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         space-x-3 
         p-3 
         hover:bg-neutral-400
-        rounded-lg
         transition
         cursor-pointer
         my-3
-        text-cyan-400
+        border-b-[1px]
+        border-sky-400
         `,
-        selected ? "bg-gradient-to-br from-gray-800 via-slate-900 to-stone-800" : "bg-gradient-to-br from-gray-400 via-slate-600 to-stone-400"
+        selected ? "bg-gradient-to-br from-gray-800 via-slate-900 to-stone-800" : ""
       )}
     >
       {data.isGroup ? (
