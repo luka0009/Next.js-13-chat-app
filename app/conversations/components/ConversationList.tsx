@@ -1,27 +1,38 @@
-'use client';
+"use client";
 
-import useConversation from '@/app/hooks/useConversation';
-import { FullConversationType } from '@/app/types';
-import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { MdOutlineGroupAdd } from 'react-icons/md';
-import ConversationBox from './ConversationBox';
+import useConversation from "@/app/hooks/useConversation";
+import { FullConversationType } from "@/app/types";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { MdOutlineGroupAdd } from "react-icons/md";
+import ConversationBox from "./ConversationBox";
+import GroupChatModal from "./GroupChatModal";
+import { User } from "@prisma/client";
 
 type Props = {
-    initialItems: FullConversationType[];
-}
+  initialItems: FullConversationType[];
+  users: User[],
+};
 
-const ConversationList = ({ initialItems }: Props) => {
+const ConversationList = ({ initialItems, users }: Props) => {
   const [items, setItems] = useState(initialItems);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
 
   const { conversationId, isOpen } = useConversation();
 
-
   return (
-    <aside className={clsx(`
+    <>
+    <GroupChatModal 
+    users={users}
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+    />
+      <aside
+        className={clsx(
+          `
         fixed 
         inset-y-0 
         pb-20
@@ -32,13 +43,15 @@ const ConversationList = ({ initialItems }: Props) => {
         overflow-y-auto 
         border-r 
         border-gray-200 
-      `, isOpen ? 'hidden' : 'block w-full left-0')}>
+      `,
+          isOpen ? "hidden" : "block w-full left-0"
+        )}
+      >
         <div className="px-5">
           <div className="flex justify-between mb-4 pt-4">
-            <div className="text-2xl font-bold text-white">
-              Messages
-            </div>
-            <div 
+            <div className="text-2xl font-bold text-white">Messages</div>
+            <div
+              onClick={() => setIsModalOpen(true)}
               className="
                 rounded-full 
                 p-2 
@@ -61,7 +74,8 @@ const ConversationList = ({ initialItems }: Props) => {
           ))}
         </div>
       </aside>
-  )
-}
+    </>
+  );
+};
 
-export default ConversationList
+export default ConversationList;

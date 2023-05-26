@@ -7,6 +7,7 @@ import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
 import ProfileDrawer from "./ProfileDrawer";
+import AvatarGroup from "@/app/components/AvatarGroup";
 
 type Props = {
   conversation: Conversation & {
@@ -28,11 +29,11 @@ const Header = ({ conversation }: Props) => {
 
   return (
     <>
-    <ProfileDrawer 
-    data={conversation}
-    isOpen={drawerOpen}
-    onClose={() => setDrawerOpen(false)}
-    />
+      <ProfileDrawer
+        data={conversation}
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
       <div
         className="
         bg-gradient-to-bl from-gray-700 via-black to-blue-900 via-30%        text-white 
@@ -62,12 +63,11 @@ const Header = ({ conversation }: Props) => {
           >
             <HiChevronLeft size={32} />
           </Link>
-          {/* {conversation.isGroup ? (
-          <AvatarGroup users={conversation.users} />
-        ) : (
-          <Avatar user={otherUser} />
-        )} */}
-          <Avatar user={otherUser} />
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <Avatar user={otherUser} />
+          )}
           <div className="flex flex-col">
             <div>{conversation.name || otherUser.name}</div>
             <div className="text-sm font-light text-neutral-100">

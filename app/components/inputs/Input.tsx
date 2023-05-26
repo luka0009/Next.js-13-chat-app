@@ -11,6 +11,7 @@ type Props = {
   errors: FieldErrors;
   disabled?: boolean;
   dark?: boolean,
+  placeholder?: string,
 };
 
 const Input = ({
@@ -21,7 +22,8 @@ const Input = ({
   register,
   errors,
   disabled,
-  dark
+  dark,
+  placeholder
 }: Props) => {
   return (
     <div>
@@ -43,22 +45,21 @@ const Input = ({
           type={type}
           autoComplete={id}
           disabled={disabled}
+          placeholder={placeholder}
           {...register(id, { required })}
           className={clsx(
             `
-            bg-slate-800
             form-input
             block 
             w-full 
             rounded-md 
             border-0 
             py-1.5 
-            text-sky-500 
             shadow-sm 
             ring-1 
             ring-inset 
             ring-sky-500
-            placeholder:text-sky-300 
+            placeholder:font-light
             focus:ring-2 
             focus:ring-inset 
             focus:ring-sky-600 
