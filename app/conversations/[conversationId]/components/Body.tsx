@@ -38,11 +38,23 @@ const Body: React.FC<Props> = ({ initialMessages }) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
     };
 
+    const updateMessageHandler = (newMessage: FullMessageType) => {
+      setMessages((current) => current.map((currentMessage) => {
+        if(currentMessage.id === newMessage.id) {
+          return newMessage;
+        };
+
+        return currentMessage;
+      }))
+    }
+
     pusherClient.bind("messages:new", sendMessageHandler);
+    pusherClient.bind('message:update', updateMessageHandler)
 
     return () => {
       pusherClient.unsubscribe(conversationId);
       pusherClient.unbind("messages:new", sendMessageHandler);
+      pusherClient.unbind("message:update", updateMessageHandler);
     };
   }, [conversationId]);
 
