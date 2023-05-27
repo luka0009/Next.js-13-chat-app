@@ -4,11 +4,14 @@ import useConversation from "@/app/hooks/useConversation";
 import { FullConversationType } from "@/app/types";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import ConversationBox from "./ConversationBox";
 import GroupChatModal from "./GroupChatModal";
 import { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { pusherClient } from "@/app/libs/pusher";
+import { find } from "lodash";
 
 type Props = {
   initialItems: FullConversationType[];
@@ -20,8 +23,52 @@ const ConversationList = ({ initialItems, users }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
-
+  const session = useSession();
   const { conversationId, isOpen } = useConversation();
+
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email
+  }, [session.data?.user?.email]);
+
+  useEffect(() => {
+    if(!pusherKey) {
+      return;
+    };
+
+    pusherClient.subscribe(pusherKey);
+
+    const newMessageHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        if(find(current, { id: conversation.id })) {
+          return current;
+        };
+
+        return { conversation, ...current };
+      })
+    };
+
+    const updateHandler = (conversation: FullConversationType) => {
+      setItems((current) => current.map((currentConversation) => {
+        if (currentConversation.id === conversation.id) {
+          return {
+            ...currentConversation,
+            messages: conversation.messages
+          };
+        }
+
+        return currentConversation;
+      }));
+    }
+
+    pusherClient.bind('conversation:new', newMessageHandler);
+    pusherClient.bind('conversation:update', updateHandler);
+
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind('conversation:new', newMessageHandler);
+      pusherClient.unbind('conversation:update', updateHandler);
+    }
+  }, [pusherKey]);
 
   return (
     <>
@@ -65,7 +112,7 @@ const ConversationList = ({ initialItems, users }: Props) => {
               <MdOutlineGroupAdd size={20} />
             </div>
           </div>
-          {items.map((item) => (
+          {items?.map((item) => (
             <ConversationBox
               key={item.id}
               data={item}
