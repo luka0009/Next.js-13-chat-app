@@ -43,7 +43,7 @@ const MessageBox: React.FC<Props> = ({ isLast, data }) => {
   return (
     <div className={container}>
       <div className={avatar}>
-        <Avatar user={data.seenIds} />
+        <Avatar user={data.sender} />
       </div>
       <div className={body}>
         <div className="flex items-center gap-1">
