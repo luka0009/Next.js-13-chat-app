@@ -73,7 +73,6 @@ const GroupChatModal: React.FC<Props> = ({ isOpen, onClose, users }) => {
           <div className="mt-10 flex flex-col gap-y-8">
             <Input
               disabled={isLoading}
-              placeholder='Group chat name'
               label="Name" 
               id="name" 
               errors={errors} 

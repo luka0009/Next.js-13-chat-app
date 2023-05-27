@@ -7,9 +7,10 @@ type Props = {
   isOpen?: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  dark?: boolean,
 };
 
-const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<Props> = ({ isOpen, onClose, children, dark }) => {
   return (
     <>
       <Transition.Root show={isOpen} as={Fragment}>
@@ -55,7 +56,7 @@ const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel 
-                className="
+                className={`
                   relative 
                   transform 
                   overflow-hidden 
@@ -72,7 +73,8 @@ const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
                   sm:w-full 
                   sm:max-w-lg 
                   sm:p-6
-                "
+                  ${dark && 'bg-black p-0'}
+                `}
               >
                 <div 
                   className="
