@@ -15,7 +15,7 @@ import { find } from "lodash";
 
 type Props = {
   initialItems: FullConversationType[];
-  users: User[],
+  users: User[];
 };
 
 const ConversationList = ({ initialItems, users }: Props) => {
@@ -27,56 +27,66 @@ const ConversationList = ({ initialItems, users }: Props) => {
   const { conversationId, isOpen } = useConversation();
 
   const pusherKey = useMemo(() => {
-    return session.data?.user?.email
+    return session.data?.user?.email;
   }, [session.data?.user?.email]);
 
   useEffect(() => {
-    if(!pusherKey) {
+    if (!pusherKey) {
       return;
-    };
+    }
 
     pusherClient.subscribe(pusherKey);
 
     const newMessageHandler = (conversation: FullConversationType) => {
       setItems((current) => {
-        if(find(current, { id: conversation.id })) {
+        if (find(current, { id: conversation.id })) {
           return current;
-        };
+        }
 
         return { conversation, ...current };
-      })
+      });
     };
 
     const updateHandler = (conversation: FullConversationType) => {
-      setItems((current) => current.map((currentConversation) => {
-        if (currentConversation.id === conversation.id) {
-          return {
-            ...currentConversation,
-            messages: conversation.messages
-          };
-        }
+      setItems((current) =>
+        current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+            };
+          }
 
-        return currentConversation;
-      }));
-    }
+          return currentConversation;
+        })
+      );
+    };
 
-    pusherClient.bind('conversation:new', newMessageHandler);
-    pusherClient.bind('conversation:update', updateHandler);
+    const deleteHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        return [...current.filter((convo) => convo.id !== conversation.id)];
+      });
+    };
+
+    pusherClient.bind("conversation:new", newMessageHandler);
+    pusherClient.bind("conversation:update", updateHandler);
+    pusherClient.bind("conversation:remove", deleteHandler);
 
     return () => {
       pusherClient.unsubscribe(pusherKey);
-      pusherClient.unbind('conversation:new', newMessageHandler);
-      pusherClient.unbind('conversation:update', updateHandler);
-    }
+      pusherClient.unbind("conversation:new", newMessageHandler);
+      pusherClient.unbind("conversation:update", updateHandler);
+      pusherClient.unbind("conversation:remove", deleteHandler);
+    };
   }, [pusherKey]);
 
   return (
     <>
-    <GroupChatModal 
-    users={users}
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-    />
+      <GroupChatModal
+        users={users}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
       <aside
         className={clsx(
           `
