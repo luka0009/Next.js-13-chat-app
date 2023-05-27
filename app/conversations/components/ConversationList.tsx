@@ -66,6 +66,10 @@ const ConversationList = ({ initialItems, users }: Props) => {
       setItems((current) => {
         return [...current.filter((convo) => convo.id !== conversation.id)];
       });
+
+      if(conversationId === conversation.id) {
+        router.push('/conversations');
+      }
     };
 
     pusherClient.bind("conversation:new", newMessageHandler);
@@ -78,7 +82,7 @@ const ConversationList = ({ initialItems, users }: Props) => {
       pusherClient.unbind("conversation:update", updateHandler);
       pusherClient.unbind("conversation:remove", deleteHandler);
     };
-  }, [pusherKey]);
+  }, [pusherKey, conversationId, router]);
 
   return (
     <>

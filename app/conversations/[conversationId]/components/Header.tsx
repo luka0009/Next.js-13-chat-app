@@ -19,14 +19,6 @@ const Header = ({ conversation }: Props) => {
   const otherUser = useOtherUser(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const statusText = useMemo(() => {
-    if (conversation.isGroup) {
-      return `${conversation.users.length} members`;
-    }
-
-    return "Active";
-  }, [conversation]);
-
   return (
     <>
       <ProfileDrawer
@@ -70,9 +62,8 @@ const Header = ({ conversation }: Props) => {
           )}
           <div className="flex flex-col">
             <div>{conversation.name || otherUser.name}</div>
-            <div className="text-sm font-light text-neutral-100">
-              {statusText}
-            </div>
+            {/* <div className="text-sm font-light text-neutral-100">
+            </div> */}
           </div>
         </div>
         <HiEllipsisHorizontal

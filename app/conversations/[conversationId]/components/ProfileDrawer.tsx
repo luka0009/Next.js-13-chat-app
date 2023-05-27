@@ -27,14 +27,6 @@ const ProfileDrawer: React.FC<Props> = ({ data, isOpen, onClose }) => {
     return data.name || otherUser.name;
   }, [data.name, otherUser.name]);
 
-  const statusText = useMemo(() => {
-    if (data.isGroup) {
-      return `${data.users.length} members`;
-    }
-
-    return "Active";
-  }, [data]);
-
   return (
     <>
       <ConfirmModal
@@ -96,9 +88,8 @@ const ProfileDrawer: React.FC<Props> = ({ data, isOpen, onClose }) => {
                             )}
                           </div>
                           <div className="text-white">{title}</div>
-                          <div className="text-sm text-gray-200">
-                            {statusText}
-                          </div>
+                          {/* <div className="text-sm text-gray-200">
+                          </div> */}
                           <div className="flex gap-10 my-8">
                             <div
                               onClick={() => setConfirmOpen(true)}
