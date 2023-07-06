@@ -1,5 +1,49 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Chat App
+
+Full stack Chat application created with: Next.js, Next-auth, Pusher, Tailwind css, Typescript, Prisma, MongoDb, Cloudinary. It has all the feauteres, authentication, live messaging, updadting profile, deleting conversations and etc.
+
+## Features
+
+- Authentication
+- live messaging
+- upload images
+- send images
+- update profile
+- Delete conversations
+
+## Installation
+
+Follow these steps to install and set up the project:
+
+1. Install project dependencies by running the following command:
+
+`npm install`
+
+2. Create a new file named `.env` in the root directory of the project.
+
+3. Add the following configuration variables to the `.env` file:
+
+`DATABASE_URL`=`<YOUR_DATABASE_URL>`
+`NEXTAUTH_SECRET`='`<NEXTAUTH_SECRET>`'
+
+`GOOGLE_CLIENT_ID`=`<YOUR_GOOGLE_CLIENT_ID>`
+`GOOGLE_CLIENT_SECRET`=`<YOUR_GOOGLE_CLIENT_SECRET>`
+
+`GITHUB_ID`=`<GITHUB_ID>`
+`GITHUB_SECRET`=`<YOUR_GITHUB_SECRET>`
+
+`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`=`"<YOUR_CLOUDINARY_NAME>"`
+
+`NEXT_PUBLIC_PUSHER_APP_KEY`="`<YOUR_NEXT_PUBLIC_PUSHER_APP_KEY>`"
+`PUSHER_APP_ID`=`"<YOUR_PUSHER_ID>"`
+`PUSHER_APP_SECRET`=`"<YOUR_PUSHER_APP_SECRET>"`
+
+## License
+
+You are free to use, modify, and distribute this software for any purpose.
+
 ## Getting Started
 
 First, run the development server:
