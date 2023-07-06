@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Live Website
 
-- [Link](https://next-app-luka0009.vercel.app)
+## [Link](https://next-js-13-chat-app.vercel.app/)
 
 # Chat App
 
