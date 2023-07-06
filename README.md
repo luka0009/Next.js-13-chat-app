@@ -1,6 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-##  - <a href=' https://next-app-luka0009.vercel.app'> L i v e  W E B S I T E </a>
+## Live Website
+
+- [Link](https://next-app-luka0009.vercel.app)
 
 # Chat App
 
